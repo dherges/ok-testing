@@ -17,6 +17,12 @@ public class MessagesApiTest {
     @Rule
     public MockWebServer mockBackend = new MockWebServer();
 
+    private MessagesApi mockApi() {
+        return new MessagesApi.Builder()
+                .baseUrl(mockBackend.url("/").toString())
+                .build();
+    }
+
     @Test
     public void builder_returnsInstance() {
         final MessagesApi messagesApi = new MessagesApi.Builder()
@@ -35,10 +41,7 @@ public class MessagesApiTest {
                 .addHeader("Content-Type", "application/json;charset=utf-8")
         );
 
-        final MessagesApi msgApi = new MessagesApi.Builder()
-                .baseUrl(mockBackend.url("/").toString())
-                .build();
-        final Response<Message> response = msgApi.findMessage("123").execute();
+        final Response<Message> response = mockApi().findMessage("123").execute();
 
         assertThat(response.code()).isEqualTo(200);
         assertThat(response.headers().get("Content-Type")).contains("application/json");
