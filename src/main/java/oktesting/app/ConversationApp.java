@@ -21,6 +21,8 @@ public class ConversationApp implements SparkApplication {
 
             final Message msg = msgApi.findMessage("foooo").execute().body();
 
+            res.header("Content-Type", "application/json;charset=utf-8");
+
             return new Conversation(msg, "yes, a topic!");
         }, MoshiResponseTransformer.create(Conversation.class));
     }

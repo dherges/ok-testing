@@ -45,6 +45,7 @@ public class ConversationAppTest {
 
         // asserts expected behaviour
         assertThat(appResponse.code()).isEqualTo(200);
+        assertThat(appResponse.header("Content-Type")).contains("application/json");
         assertThat(appResponse.body().source().readUtf8())
                 .isEqualTo("{\"message\":{\"text\":\"hello testing!\"},\"topic\":\"yes, a topic!\"}");
     }
