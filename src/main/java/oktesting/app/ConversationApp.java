@@ -1,5 +1,6 @@
 package oktesting.app;
 
+import ext.spark.MoshiResponseTransformer;
 import oktesting.messaging.Message;
 import oktesting.messaging.MessagesApi;
 import spark.servlet.SparkApplication;
@@ -21,6 +22,6 @@ public class ConversationApp implements SparkApplication {
             final Message msg = msgApi.findMessage("foooo").execute().body();
 
             return new Conversation(msg, "yes, a topic!");
-        });
+        }, MoshiResponseTransformer.create(Conversation.class));
     }
 }
