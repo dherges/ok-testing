@@ -7,6 +7,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
+import okhttp3.mockwebserver.RecordedRequest;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -43,11 +44,16 @@ public class ConversationAppTest {
         final Response appResponse = appCall.execute();
 
 
-        // asserts expected behaviour
+        // asserts that our app responds with expected content
         assertThat(appResponse.code()).isEqualTo(200);
         assertThat(appResponse.header("Content-Type")).contains("application/json");
         assertThat(appResponse.body().source().readUtf8())
-                .isEqualTo("{\"message\":{\"text\":\"hello testing!\"},\"topic\":\"yes, a topic!\"}");
+                .isEqualTo("{\"message\":{\"text\":\"hello testing!\"},\"topic\":\"Conversation for keyword test123\"}");
+
+        // asserts that our app actually calls through to the mock backend
+        final RecordedRequest recordedRequest = mockBackend.takeRequest();
+        assertThat(recordedRequest.getMethod()).isEqualTo("GET");
+        assertThat(recordedRequest.getPath()).isEqualTo("/message?query=test123");
     }
 
 }
