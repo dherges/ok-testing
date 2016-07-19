@@ -12,6 +12,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 
+import static oktesting.app.Config.configSet;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
@@ -29,6 +30,8 @@ public class ConversationAppTest {
     public void conversation_GET() throws IOException, InterruptedException {
         // instructs the mock backend to respond with well-known data
         mockBackend.enqueue(new MockResponse().setBody("{\"text\":\"hello testing!\"}"));
+        // configures our application to connect to the mock backend
+        configSet("backendUrl", mockBackend.url("/").toString());
 
 
         // prepares an HTTP call to our web app (the web app will be the unit under test)
@@ -41,8 +44,8 @@ public class ConversationAppTest {
 
 
         // asserts expected behaviour
-        assertThat(appResponse).isNotNull();
         assertThat(appResponse.code()).isEqualTo(200);
+        assertThat(appResponse.body().source().readUtf8()).isEqualTo("");
     }
 
 }

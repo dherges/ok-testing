@@ -1,7 +1,10 @@
 package oktesting.app;
 
+import oktesting.messaging.Message;
+import oktesting.messaging.MessagesApi;
 import spark.servlet.SparkApplication;
 
+import static oktesting.app.Config.config;
 import static spark.Spark.get;
 
 
@@ -11,9 +14,13 @@ public class ConversationApp implements SparkApplication {
     public void init() {
 
         get("/conversation", (req, res) -> {
+            final MessagesApi msgApi = new MessagesApi.Builder()
+                    .baseUrl(config("backendUrl", ""))
+                    .build();
 
-            res.status(201);
-            return "abc";
+            final Message msg = msgApi.findMessage("foooo").execute().body();
+
+            return msg.text;
         });
     }
 }
