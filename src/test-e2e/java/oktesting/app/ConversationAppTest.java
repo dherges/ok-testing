@@ -1,5 +1,6 @@
 package oktesting.app;
 
+import ext.junit.SparkAppUnderTest;
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -13,10 +14,14 @@ import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class AppTest {
+
+public class ConversationAppTest {
 
     @Rule
     public MockWebServer mockBackend = new MockWebServer();
+
+    @Rule
+    public SparkAppUnderTest sparkApp = new SparkAppUnderTest<>(ConversationApp.class);
 
     private final OkHttpClient appClient = new OkHttpClient.Builder().build();
 
@@ -28,7 +33,7 @@ public class AppTest {
 
         // prepares an HTTP call to our web app (the web app will be the unit under test)
         final Call appCall = appClient.newCall(new Request.Builder()
-                .url("http://localhost:4567/conversation?q=test123")
+                .url(sparkApp.serverUrl() + "/conversation?q=test123")
                 .get()
                 .build());
         // obtains the HTTP response from our app
