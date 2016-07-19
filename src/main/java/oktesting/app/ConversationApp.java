@@ -20,7 +20,7 @@ public class ConversationApp implements SparkApplication {
 
             final Message msg = msgApi.findMessage("foooo").execute().body();
 
-            return msg.text;
+            return new Conversation(msg, "yes, a topic!");
         });
     }
 }
