@@ -20,3 +20,40 @@ dependencies {
   testCompile 'org.assertj:assertj-core:3.5.2'
   testCompile 'com.squareup.okhttp3:mockwebserver:3.4.1'
 }
+
+
+
+/** e2e testing **/
+
+configurations {
+  e2eTestCompile.extendsFrom testCompile
+  e2eTestRuntime.extendsFrom testRuntime
+}
+
+sourceSets {
+  e2eTest {
+    java {
+      compileClasspath += main.output + test.output
+      runtimeClasspath += main.output + test.output
+      srcDir file('src/test-e2e/java')
+    }
+    resources.srcDir file('src/test-e2e/resources')
+  }
+}
+
+task e2eTest(type: Test) {
+  testClassesDir = sourceSets.e2eTest.output.classesDir
+  classpath = sourceSets.e2eTest.runtimeClasspath
+}
+
+configure(e2eTest) {
+  group = 'verification'
+  description = 'Runs end-to-end test cases.'
+}
+
+check.dependsOn e2eTest
+e2eTest.mustRunAfter test
+
+tasks.withType(Test) {
+  reports.html.destination = file("${reporting.baseDir}/${name}")
+}
