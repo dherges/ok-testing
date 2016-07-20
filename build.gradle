@@ -1,5 +1,6 @@
 plugins {
   id "java"
+  id "application"
 }
 
 
@@ -59,3 +60,19 @@ e2eTest.mustRunAfter test
 tasks.withType(Test) {
   reports.html.destination = file("${reporting.baseDir}/${name}")
 }
+
+
+
+/** java application distributable */
+
+group 'oktesting'
+version '1.0-SNAPSHOT'
+
+jar {
+  manifest {
+    attributes 'Main-Class': 'oktesting.app.AppBootstrap'
+  }
+}
+
+sourceCompatibility = 1.8
+mainClassName = 'oktesting.app.AppBootstrap'
