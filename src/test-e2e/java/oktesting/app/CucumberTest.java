@@ -19,7 +19,7 @@ import static spark.Spark.awaitInitialization;
 
 
 @RunWith(Cucumber.class)
-public class ConversationAppCucumberTest {
+public class CucumberTest {
 
     public static SparkApplication sparkApp;
 
