@@ -12,19 +12,30 @@ import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 
 import cucumber.api.junit.Cucumber;
+import ext.junit.SparkAppUnderTest;
+import spark.servlet.SparkApplication;
+
+import static spark.Spark.awaitInitialization;
 
 
 @RunWith(Cucumber.class)
 public class ConversationAppCucumberTest {
 
+    public static SparkApplication sparkApp;
+
     @BeforeClass
     public static void setUp() {
-    	 System.out.println("setting up");
+    	 // XX .. it's a bit hacky to set up the embedded server in before class
+       sparkApp = new ConversationApp();
+       sparkApp.init();
+
+       awaitInitialization();
     }
 
     @AfterClass
     public static void tearDown() {
-    	 System.out.println("tearing down");
+      // destroys and quits the application
+      sparkApp.destroy();
     }
 
 }
