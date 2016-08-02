@@ -11,30 +11,11 @@ repositories {
 }
 
 
-dependencies {
-  compile 'com.sparkjava:spark-core:2.5'
-
-  compile 'com.squareup.retrofit2:retrofit:2.1.0'
-  compile 'com.squareup.retrofit2:converter-moshi:2.1.0'
-  compile 'com.squareup.okhttp3:okhttp:3.4.1'
-  compile 'com.squareup.okio:okio:1.9.0'
-  compile 'com.squareup.moshi:moshi:1.2.0'
-
-  testCompile 'junit:junit:4.+'
-  testCompile 'info.cukes:cucumber-java8:1.2.4'
-  testCompile 'info.cukes:cucumber-junit:1.2.4'
-  testCompile 'org.assertj:assertj-core:3.5.2'
-  testCompile 'com.squareup.okhttp3:mockwebserver:3.4.1'
-}
-
-
-
-/** e2e testing **/
-
 configurations {
   e2eTestCompile.extendsFrom testCompile
   e2eTestRuntime.extendsFrom testRuntime
 }
+
 
 sourceSets {
   e2eTest {
@@ -46,6 +27,29 @@ sourceSets {
     resources.srcDir file('src/test-e2e/resources')
   }
 }
+
+
+
+dependencies {
+  compile 'com.sparkjava:spark-core:2.5'
+
+  compile 'com.squareup.retrofit2:retrofit:2.1.0'
+  compile 'com.squareup.retrofit2:converter-moshi:2.1.0'
+  compile 'com.squareup.okhttp3:okhttp:3.4.1'
+  compile 'com.squareup.okio:okio:1.9.0'
+  compile 'com.squareup.moshi:moshi:1.2.0'
+
+  testCompile 'junit:junit:4.+'
+  testCompile 'org.assertj:assertj-core:3.5.2'
+  testCompile 'com.squareup.okhttp3:mockwebserver:3.4.1'
+
+  e2eTestCompile 'info.cukes:cucumber-java8:1.2.4'
+  e2eTestCompile 'info.cukes:cucumber-junit:1.2.4'
+}
+
+
+
+/** e2e tasks **/
 
 task e2eTest(type: Test) {
   testClassesDir = sourceSets.e2eTest.output.classesDir
