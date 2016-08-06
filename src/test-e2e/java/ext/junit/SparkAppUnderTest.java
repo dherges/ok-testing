@@ -21,31 +21,31 @@ import static spark.Spark.awaitInitialization;
  */
 public class SparkAppUnderTest<T extends SparkApplication> extends ExternalResource implements TestRule {
 
-    private final Class<T> sparkAppClz;
-    private T sparkApplication;
+  private final Class<T> sparkAppClz;
+  private T sparkApplication;
 
-    public SparkAppUnderTest(Class<T> sparkAppClz) {
-        this.sparkAppClz = sparkAppClz;
-    }
+  public SparkAppUnderTest(Class<T> sparkAppClz) {
+    this.sparkAppClz = sparkAppClz;
+  }
 
 
-    @Override
-    protected void before() throws Throwable {
-        // spawns the application
-        sparkApplication = sparkAppClz.newInstance();
-        sparkApplication.init();
+  @Override
+  protected void before() throws Throwable {
+    // spawns the application
+    sparkApplication = sparkAppClz.newInstance();
+    sparkApplication.init();
 
-        awaitInitialization();
-    }
+    awaitInitialization();
+  }
 
-    @Override
-    protected void after() {
-        // destroys and quits the application
-        sparkApplication.destroy();
-    }
+  @Override
+  protected void after() {
+    // destroys and quits the application
+    sparkApplication.destroy();
+  }
 
-    public String serverUrl() {
-        return "http://localhost:4567"; // hard-coded for simplicity
-    }
+  public String serverUrl() {
+    return "http://localhost:4567"; // hard-coded for simplicity
+  }
 
 }

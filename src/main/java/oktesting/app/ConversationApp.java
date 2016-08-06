@@ -18,21 +18,21 @@ import static spark.Spark.*;
 
 public class ConversationApp implements SparkApplication {
 
-    @Override
-    public void init() {
+  @Override
+  public void init() {
 
-        get("/conversation", (req, res) -> {
-            final MessagesApi msgApi = new MessagesApi.Builder()
-                    .baseUrl(config("backendUrl", ""))
-                    .build();
+    get("/conversation", (req, res) -> {
+      final MessagesApi msgApi = new MessagesApi.Builder()
+        .baseUrl(config("backendUrl", ""))
+        .build();
 
-            final String keyword = req.queryParams("q");
+      final String keyword = req.queryParams("q");
 
-            final Message msg = msgApi.findMessage(keyword).execute().body();
+      final Message msg = msgApi.findMessage(keyword).execute().body();
 
-            res.header("Content-Type", "application/json;charset=utf-8");
+      res.header("Content-Type", "application/json;charset=utf-8");
 
-            return new Conversation(msg, "Conversation for keyword " + keyword);
-        }, MoshiResponseTransformer.create(Conversation.class));
-    }
+      return new Conversation(msg, "Conversation for keyword " + keyword);
+    }, MoshiResponseTransformer.create(Conversation.class));
+  }
 }

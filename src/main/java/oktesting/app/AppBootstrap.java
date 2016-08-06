@@ -11,11 +11,11 @@ import static spark.Spark.externalStaticFileLocation;
 
 public class AppBootstrap {
 
-    public static void main(String[] args) {
+  public static void main(String[] args) {
 
-      externalStaticFileLocation("build/reports");
+    externalStaticFileLocation("build/reports");
 
-        new ConversationApp().init();
-    }
+    new ConversationApp().init();
+  }
 
 }

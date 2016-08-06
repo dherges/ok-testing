@@ -24,21 +24,21 @@ import static spark.Spark.awaitInitialization;
 )
 public class CucumberTest {
 
-    public static SparkApplication sparkApp;
+  public static SparkApplication sparkApp;
 
-    @BeforeClass
-    public static void setUp() {
-    	 // XX .. it's a bit hacky to set up the embedded server in before class
-       sparkApp = new ConversationApp();
-       sparkApp.init();
+  @BeforeClass
+  public static void setUp() {
+    // XX .. it's a bit hacky to set up the embedded server in before class
+    sparkApp = new ConversationApp();
+    sparkApp.init();
 
-       awaitInitialization();
-    }
+    awaitInitialization();
+  }
 
-    @AfterClass
-    public static void tearDown() {
-      // destroys and quits the application
-      sparkApp.destroy();
-    }
+  @AfterClass
+  public static void tearDown() {
+    // destroys and quits the application
+    sparkApp.destroy();
+  }
 
 }
