@@ -13,7 +13,7 @@ import oktesting.messaging.MessagesApi;
 import spark.servlet.SparkApplication;
 
 import static oktesting.app.Config.config;
-import static spark.Spark.get;
+import static spark.Spark.*;
 
 
 public class ConversationApp implements SparkApplication {

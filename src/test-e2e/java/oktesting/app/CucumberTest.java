@@ -12,13 +12,16 @@ import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 
 import cucumber.api.junit.Cucumber;
-import ext.junit.SparkAppUnderTest;
+import cucumber.api.CucumberOptions;
 import spark.servlet.SparkApplication;
 
 import static spark.Spark.awaitInitialization;
 
 
 @RunWith(Cucumber.class)
+@CucumberOptions(
+  plugin = {"pretty", "html:build/reports/cucumber"}
+)
 public class CucumberTest {
 
     public static SparkApplication sparkApp;
