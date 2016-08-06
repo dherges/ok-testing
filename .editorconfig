@@ -15,3 +15,7 @@ max_line_length = 0
 [*.md]
 indent_size = 2
 max_line_length = 0
+
+[*.java]
+indent_size = 2
+max_line_length = 0

@@ -19,23 +19,24 @@ import spark.ResponseTransformer;
  */
 public class MoshiResponseTransformer<T> implements ResponseTransformer {
 
-    private final JsonAdapter<T> jsonAdapter;
-    private MoshiResponseTransformer(JsonAdapter<T>  jsonAdapter) {
-        this.jsonAdapter = jsonAdapter;
-    }
+  private final JsonAdapter<T> jsonAdapter;
 
-    @Override
-    public String render(Object model) throws Exception {
-        // A JsonAdapter does the real Type-to-JSON serialization magic
-        return jsonAdapter.toJson((T) model);
-    }
+  private MoshiResponseTransformer(JsonAdapter<T> jsonAdapter) {
+    this.jsonAdapter = jsonAdapter;
+  }
+
+  @Override
+  public String render(Object model) throws Exception {
+    // A JsonAdapter does the real Type-to-JSON serialization magic
+    return jsonAdapter.toJson((T) model);
+  }
 
 
-    public static ResponseTransformer create(Class<?> convertibleClz) {
-        return new MoshiResponseTransformer<>(
-            new Moshi.Builder()
-                .build()
-                .adapter(convertibleClz)
-        );
-    }
+  public static ResponseTransformer create(Class<?> convertibleClz) {
+    return new MoshiResponseTransformer<>(
+      new Moshi.Builder()
+        .build()
+        .adapter(convertibleClz)
+    );
+  }
 }
