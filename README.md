@@ -36,3 +36,11 @@ docker-compose up --build -d
 
 Builds a distributable Docker image for deployments.
 Gradle build is executed and both tests and end-to-end tests are run when the Docker image is built.
+
+
+Test Reports are served as static files from:
+* http://<host>/cucumber/index.html
+* http://<host>/e2eTest/index.html
+* http://<host>/test/index.html
+
+Replace ``<host>`` with the IP / Hostname that connects to the docker container, e.g. http://192.168.99.100:4567
