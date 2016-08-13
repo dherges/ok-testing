@@ -7,12 +7,12 @@
  */
 package oktesting.app;
 
+import com.orhanobut.mockwebserverplus.MockWebServerPlus;
 import cucumber.api.java8.En;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.mockwebserver.MockResponse;
-import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
 
 import java.io.IOException;
@@ -24,7 +24,7 @@ import static org.assertj.core.api.Assertions.fail;
 
 public class StepDefinitions implements En {
 
-  private final MockWebServer mockWebServer = new MockWebServer();
+  private final MockWebServerPlus mockWebServer = new MockWebServerPlus();
   private final OkHttpClient okHttpClient = new OkHttpClient.Builder().build();
 
   private Response response;
@@ -34,16 +34,16 @@ public class StepDefinitions implements En {
 
     Before(() -> {
       try {
-        mockWebServer.start();
+        mockWebServer.server().start();
       } catch (IOException e) {
         fail("mock web server failed to start", e);
       }
-      configSet("backendUrl", mockWebServer.url("/").toString());
+      configSet("backendUrl", mockWebServer.url("/"));
     });
 
     After(() -> {
       try {
-        mockWebServer.shutdown();
+        mockWebServer.server().shutdown();
       } catch (IOException e) {
         fail("mock web server failed to start", e);
       }
@@ -51,6 +51,10 @@ public class StepDefinitions implements En {
 
     Given("^mock backend responds with$", (String docString) -> {
       mockWebServer.enqueue(new MockResponse().setBody(docString));
+    });
+
+    Given("^mock backend responds from (.+)$", (String file) -> {
+      mockWebServer.enqueue(file);
     });
 
     When("^client calls ([A-Z]+) (.+)$", (String verb, String path) -> {

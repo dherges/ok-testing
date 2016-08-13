@@ -45,6 +45,7 @@ dependencies {
 
   e2eTestCompile 'info.cukes:cucumber-java8:1.2.5-SNAPSHOT'
   e2eTestCompile 'info.cukes:cucumber-junit:1.2.5-SNAPSHOT'
+  e2eTestCompile 'com.orhanobut:mockwebserverplus:0.8.2-SNAPSHOT'
 }
 
 
