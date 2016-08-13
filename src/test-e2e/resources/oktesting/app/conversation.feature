@@ -1,4 +1,4 @@
-Feature: Conversation api
+Feature: Conversation API
 
   Scenario: a full e2e test example
     Given mock backend responds with
