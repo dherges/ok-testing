@@ -20,7 +20,8 @@ import static spark.Spark.awaitInitialization;
 @RunWith(Cucumber.class)
 @CucumberOptions(
   plugin = {"pretty", "html:build/reports/cucumber"},
-  monochrome = true
+  monochrome = true,
+  features = "src/test-e2e/resources/features"
 )
 public class CucumberTest {
 
